@@ -44,8 +44,8 @@ app.get("/api/v1/health", (req, res) => {
 });
 
 // Route Imports START
-// "/api/v1/items" will prefix all item routes
-app.use("/api/v1/items", eventRoutes);
+// "/api/v1/items" will prefix all event routes
+app.use("/api/v1/", eventRoutes);
 
 // Route Imports END
 
