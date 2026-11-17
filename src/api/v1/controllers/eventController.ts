@@ -27,7 +27,7 @@ const handleEventError = (
  * @param next - The express middleware chaining function
  */
 export const getAllEvents = async (
-    req: Request,
+    req: Request<{ id: string }>,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
@@ -90,7 +90,7 @@ export const createEvent = async (
  * @param next - The express middleware chaining function
  */
 export const getEventById = async (
-    req: Request,
+    req: Request<{ id: string }>,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
@@ -115,30 +115,17 @@ export const getEventById = async (
  * @param next - The express middleware chaining function
  */
 export const updateEvent = async (
-    req: Request,
+    req: Request<{ id: string }>,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
     try {
         const { id } = req.params;
 
-        const {
-            name,
-            date,
-            capacity,
-            registrationCount,
-            status,
-            category,
-        } = req.body;
-
-        const updatedEvent: Event = await eventService.updateEvent(id, {
-            name,
-            date,
-            capacity,
-            registrationCount,
-            status,
-            category,
-        });
+        const updatedEvent: Event = await eventService.updateEvent(
+            id,
+            req.body
+        );
 
         res.status(HTTP_STATUS.OK).json({
             message: "Event updated",
@@ -156,7 +143,7 @@ export const updateEvent = async (
  * @param next - The express middleware chaining function
  */
 export const deleteEvent = async (
-    req: Request,
+    req: Request<{ id: string }>,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
